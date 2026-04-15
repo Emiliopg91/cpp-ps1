@@ -5,7 +5,7 @@ post_install() {
   echo "This binary provides a PS1 function implementation written in C++, usefull for developers."
   echo ""
   echo "Edit your ~/.bashrc and add the following line"
-  echo "    source <(/var/mnt/Datos/scripts/cpp-ps1/cpp-ps1 --source)"
+  echo "    source <(/usr/bin/cpp-ps1 --source)"
   echo ""
 }
 post_upgrade() {
