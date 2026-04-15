@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+clang++ -O3 -lgit2 -ffast-math -march=native -flto -fno-exceptions -fno-rtti -pipe -s -std=c++17 "$DIR/cpp-ps1.cpp" -o "$DIR/cpp-ps1"
