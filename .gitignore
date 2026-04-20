@@ -41,7 +41,7 @@
 *.dwo
 
 aur
-./cpp-ps1
+cpp-ps1
 src/cpp-ps1
 .cache
 pkg
