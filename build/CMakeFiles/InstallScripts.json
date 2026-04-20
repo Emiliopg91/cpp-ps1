@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/var/mnt/Datos/scripts/cpp-ps1/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

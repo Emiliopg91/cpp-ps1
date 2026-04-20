@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 4.3.1)
 
 project(cpp-ps1 VERSION 1.0.1 LANGUAGES CXX)
 
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG" CACHE STRING "" FORCE)
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)
@@ -16,6 +20,9 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
 endif()
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBGIT2 REQUIRED libgit2)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_compile_options(
@@ -56,4 +63,9 @@ add_executable(cpp-ps1 ${SRC_FILES} ${HEADER_FILES})
 
 target_include_directories(cpp-ps1 PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    ${LIBGIT2_INCLUDE_DIRS}
+)
+
+target_link_libraries(cpp-ps1 PRIVATE 
+    ${LIBGIT2_LIBRARIES}
 )
