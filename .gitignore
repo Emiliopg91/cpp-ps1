@@ -40,6 +40,10 @@
 # debug information files
 *.dwo
 
-cpp-ps1
 aur
+./cpp-ps1
+src/cpp-ps1
+.cache
+pkg
+*tar.zst
 compile_commands.json
