@@ -1,0 +1,9 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/cpp-ps1.dir/src/blocks/previous.cpp.o: dyndep
+
+build CMakeFiles/cpp-ps1.dir/src/blocks/ps1.cpp.o: dyndep
+
+build CMakeFiles/cpp-ps1.dir/src/blocks/source.cpp.o: dyndep
+
+build CMakeFiles/cpp-ps1.dir/src/main.cpp.o: dyndep
+

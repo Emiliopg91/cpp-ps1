@@ -1,0 +1,17 @@
+# ninja log v7
+1	6	1776688910741813061	/var/mnt/Datos/scripts/cpp-ps1/build/CMakeFiles/cmake.verify_globs	992dc0f763dc78be
+7	26	1776688910747547123	CMakeFiles/cpp-ps1.dir/src/main.cpp.o.ddi	49b98cc9bbafbcf2
+6	32	1776688910747320435	CMakeFiles/cpp-ps1.dir/src/blocks/source.cpp.o.ddi	219f6e958e204fae
+6	38	1776688910747062565	CMakeFiles/cpp-ps1.dir/src/blocks/ps1.cpp.o.ddi	23c6f01a0cba618
+6	38	1776688910746196538	CMakeFiles/cpp-ps1.dir/src/blocks/previous.cpp.o.ddi	f915f9eb09188c2b
+38	44	1776688910785042330	CMakeFiles/cpp-ps1.dir/CXX.dd	483a526ed24b2293
+38	44	1776688910785042330	CMakeFiles/cpp-ps1.dir/CXXModules.json	483a526ed24b2293
+38	44	1776688910785042330	CMakeFiles/cpp-ps1.dir/src/blocks/previous.cpp.o.modmap	483a526ed24b2293
+38	44	1776688910785042330	CMakeFiles/cpp-ps1.dir/src/blocks/ps1.cpp.o.modmap	483a526ed24b2293
+38	44	1776688910785042330	CMakeFiles/cpp-ps1.dir/src/blocks/source.cpp.o.modmap	483a526ed24b2293
+38	44	1776688910785042330	CMakeFiles/cpp-ps1.dir/src/main.cpp.o.modmap	483a526ed24b2293
+45	50	1776688910785196775	CMakeFiles/cpp-ps1.dir/src/blocks/previous.cpp.o	a43f5c147f716ea4
+45	50	1776688910785757750	CMakeFiles/cpp-ps1.dir/src/blocks/source.cpp.o	ecb6e49bee68d519
+45	226	1776688910786016043	CMakeFiles/cpp-ps1.dir/src/main.cpp.o	8b796e066350b2bf
+45	753	1776688910785651819	CMakeFiles/cpp-ps1.dir/src/blocks/ps1.cpp.o	201475ba364f4e6a
+753	806	1776688911493356322	cpp-ps1	64f63072ad17d046

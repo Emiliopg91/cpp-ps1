@@ -1,0 +1,45 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "Clang",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/var/mnt/Datos/scripts/cpp-ps1/build",
+	"dir-cur-src" : "/var/mnt/Datos/scripts/cpp-ps1",
+	"dir-top-bld" : "/var/mnt/Datos/scripts/cpp-ps1/build",
+	"dir-top-src" : "/var/mnt/Datos/scripts/cpp-ps1",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/var/mnt/Datos/scripts/cpp-ps1/include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/var/mnt/Datos/scripts/cpp-ps1/build/CMakeFiles/cpp-ps1.dir",
+	"sources" : 
+	{
+		"CMakeFiles/cpp-ps1.dir/src/blocks/previous.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/var/mnt/Datos/scripts/cpp-ps1/src/blocks/previous.cpp"
+		},
+		"CMakeFiles/cpp-ps1.dir/src/blocks/ps1.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/var/mnt/Datos/scripts/cpp-ps1/src/blocks/ps1.cpp"
+		},
+		"CMakeFiles/cpp-ps1.dir/src/blocks/source.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/var/mnt/Datos/scripts/cpp-ps1/src/blocks/source.cpp"
+		},
+		"CMakeFiles/cpp-ps1.dir/src/main.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/var/mnt/Datos/scripts/cpp-ps1/src/main.cpp"
+		}
+	}
+}

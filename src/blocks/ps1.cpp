@@ -7,6 +7,7 @@
 #include <climits>
 #include <cstring>
 #include <iostream>
+#include <sstream>
 
 #include "constants.hpp"
 
@@ -120,88 +121,49 @@ std::string collapse_home(const std::string& cwd) {
 }
 
 std::string get_git_prompt_segment(bool& gitPresent) {
-	git_libgit2_init();
-
-	gitPresent = true;
-
-	git_repository* repo = nullptr;
-	if (git_repository_open_ext(&repo, ".", 0, nullptr) != 0) {
-		gitPresent = false;
-		std::cout << "No encontrado";
-		const git_error* err = git_error_last();
-		if (err) {
-			std::cerr << "libgit2 error: " << err->message << "\n";
-		}
-		return "";
-	}
-
-	git_reference* head = nullptr;
-	if (git_repository_head(&head, repo) != 0) {
-		git_repository_free(repo);
-		gitPresent = false;
-		return "";
-	}
-
-	const char* branch = git_reference_shorthand(head);
-
-	// -------- STATUS (changes) --------
-	git_status_options statusopt = GIT_STATUS_OPTIONS_INIT;
-	statusopt.show				 = GIT_STATUS_SHOW_INDEX_AND_WORKDIR;
-	// statusopt.flags				 = GIT_STATUS_OPT_INCLUDE_UNTRACKED;  // quítalo si quieres equivalente a -uno
-
-	git_status_list* status = nullptr;
-	git_status_list_new(&status, repo, &statusopt);
-
-	bool has_changes = git_status_list_entrycount(status) > 0;
-
-	// -------- AHEAD / BEHIND --------
-	size_t ahead = 0, behind = 0;
-
-	git_reference* upstream = nullptr;
-	if (git_branch_upstream(&upstream, head) == 0) {
-		const git_oid* local_oid	= git_reference_target(head);
-		const git_oid* upstream_oid = git_reference_target(upstream);
-
-		if (local_oid && upstream_oid) {
-			git_graph_ahead_behind(&ahead, &behind, repo, local_oid, upstream_oid);
-		}
-	}
-
-	// -------- BUILD OUTPUT --------
-	std::string out;
-
-	out += " ";
-	out += RESET;
-	out += FG_DIR;
-	out += BG_GIT;
-	out += ICON_CLOSE_BOX;
-	out += RESET;
-	out += BG_GIT;
-
-	out += has_changes ? FG_GIT_CH : FG_GIT_OK;
-	out += "  ";
-	out += branch;
-
-	if (ahead || behind) {
+	std::string out = "";
+	gitPresent		= true;
+	std::istringstream iss(exec_cmd("git status --porcelain --branch -uno 2>/dev/null"));
+	std::string header;
+	if (std::getline(iss, header)) {
+		bool has_changes = (iss.peek() != EOF);
 		out += " ";
-		if (behind) {
-			out += to_superscript(behind);
-			out += "⇣";
+		out += RESET;
+		out += FG_DIR;
+		out += BG_GIT;
+		out += ICON_CLOSE_BOX;
+		out += RESET;
+		out += BG_GIT;
+		if (header.rfind("## ", 0) == 0) {
+			header = header.substr(3);
 		}
-		if (ahead) {
-			out += "⇡";
-			out += to_subscript(ahead);
+		std::string branch = header.substr(0, header.find("..."));
+		out += has_changes ? FG_GIT_CH : FG_GIT_OK;
+		out += "  ";
+		out += branch;
+		int ahead = 0, behind = 0;
+		auto pos = header.find("ahead ");
+		if (pos != std::string::npos) {
+			ahead = std::atoi(header.c_str() + pos + 6);
 		}
+		pos = header.find("behind ");
+		if (pos != std::string::npos) {
+			behind = std::atoi(header.c_str() + pos + 7);
+		}
+		if (ahead || behind) {
+			out += " ";
+			if (behind) {
+				out += to_superscript(behind);
+				out += "⇣";
+			}
+			if (ahead) {
+				out += "⇡";
+				out += to_subscript(ahead);
+			}
+		}
+	} else {
+		gitPresent = false;
 	}
-
-	// -------- CLEANUP --------
-	if (upstream) {
-		git_reference_free(upstream);
-	}
-	git_status_list_free(status);
-	git_reference_free(head);
-	git_repository_free(repo);
-	git_libgit2_shutdown();
 
 	return out;
 }
@@ -243,4 +205,19 @@ std::string to_superscript(int n) {
 		n /= 10;
 	}
 	return std::string(buf + pos, sizeof(buf) - pos);
+}
+
+std::string exec_cmd(const char* cmd) {
+	std::array<char, 256> buffer;
+	std::string result;
+	result.reserve(512);
+	FILE* pipe = popen(cmd, "r");
+	if (!pipe) {
+		return "";
+	}
+	while (fgets(buffer.data(), buffer.size(), pipe)) {
+		result.append(buffer.data());
+	}
+	pclose(pipe);
+	return result;
 }

@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/cpp-ps1.dir/src/blocks/source.cpp.o"
+    }
+  ],
+  "version": 1
+}

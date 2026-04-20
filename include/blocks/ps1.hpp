@@ -11,3 +11,5 @@ std::string get_git_prompt_segment(bool& gitPresent);
 std::string to_subscript(int n);
 
 std::string to_superscript(int n);
+
+std::string exec_cmd(const char* cmd);
