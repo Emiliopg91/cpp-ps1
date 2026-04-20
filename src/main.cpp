@@ -8,9 +8,9 @@
 
 #include <string>
 
-#include "bash.hpp"
-#include "previous.hpp"
-#include "ps1.hpp"
+#include "blocks/previous.hpp"
+#include "blocks/ps1.hpp"
+#include "blocks/source.hpp"
 
 // -------------------- MAIN --------------------
 int main(int argc, char* argv[]) {

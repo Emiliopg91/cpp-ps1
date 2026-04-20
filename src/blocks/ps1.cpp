@@ -1,4 +1,4 @@
-#include "ps1.hpp"
+#include "blocks/ps1.hpp"
 
 #include <git2.h>
 #include <pwd.h>

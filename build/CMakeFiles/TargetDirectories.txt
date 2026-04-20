@@ -1,3 +1,0 @@
-/var/mnt/Datos/scripts/cpp-ps1/build/CMakeFiles/cpp-ps1.dir
-/var/mnt/Datos/scripts/cpp-ps1/build/CMakeFiles/edit_cache.dir
-/var/mnt/Datos/scripts/cpp-ps1/build/CMakeFiles/rebuild_cache.dir
