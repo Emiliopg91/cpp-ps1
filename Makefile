@@ -13,7 +13,7 @@ clean:
 	@echo "#######################################################################"
 	@echo "######################### Cleaning workspace ##########################"
 	@echo "#######################################################################"
-	@rm -rf build dist .Debug .Release
+	@rm -rf build dist .Debug .Release cpp-ps1 pkg src/cpp-ps1 compile_commands.json *tar.zst
 
 config: clean
 	@echo "#######################################################################"
