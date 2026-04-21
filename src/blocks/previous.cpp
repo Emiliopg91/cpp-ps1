@@ -1,35 +1,47 @@
 #include "blocks/previous.hpp"
 
+#include <unistd.h>
+
+#include <cstring>
 #include <iostream>
 #include <string>
 
 #include "constants.hpp"
 
-int exitAndTimer(char* argv1, char* argv2, char* argv3) {
-	std::string out;
-	out.reserve(1024);
+constexpr const char* FG_TIMER = "\033[38;2;60;90;130m";
+constexpr const char* BG_TIMER = "\033[48;2;60;90;130m";
 
-	// EXIT CODE BLOCK
-	long ms	 = std::strtol(argv2, nullptr, 10);
+constexpr const char* FG_EXIT_OK = "\033[38;2;0;110;0m";
+constexpr const char* BG_EXIT_OK = "\033[48;2;0;110;0m";
+
+constexpr const char* FG_EXIT_ERR = "\033[38;2;110;0;0m";
+constexpr const char* BG_EXIT_ERR = "\033[48;2;110;0;0m";
+
+constexpr const char* FG_CMD = "\033[38;2;60;60;60m";
+constexpr const char* BG_CMD = "\033[48;2;60;60;60m";
+
+std::string exit_block(char* argv1, std::string& exit_bg) {
+	std::string out;
 	int code = std::strtol(argv1, nullptr, 10);
 
 	bool ok					   = (code == 0 || code == 130 || code == 148);
-	const std::string& exit_bg = ok ? BG_EXIT_OK : BG_EXIT_ERR;
+	exit_bg					   = ok ? BG_EXIT_OK : BG_EXIT_ERR;
 	const std::string& exit_fg = ok ? FG_EXIT_OK : FG_EXIT_ERR;
 
-	out += RESET;
-	out += exit_fg;
-	out += ICON_OPEN_BOX;
-	out += RESET;
-	out += exit_bg;
-	out += " ";
-	out += std::to_string(code);
-	out += " ";
-	out += RESET;
-	// END EXIT CODE BLOCK
+	out.append(RESET).append(exit_fg).append(ICON_OPEN_BOX).append(RESET).append(exit_bg).append(" ");
 
-	// TIMER BLOCK
+	char code_buf[16];
+	int code_len = snprintf(code_buf, sizeof(code_buf), "%d", code);
+	out.append(code_buf, code_len);
 
+	out.append(" ").append(RESET);
+
+	return out;
+}
+
+std::string timer_block(char* argv2, const std::string& exit_bg) {
+	std::string out;
+	long ms	   = std::strtol(argv2, nullptr, 10);
 	long t	   = ms;
 	long hours = t / 3600000;
 	t %= 3600000;
@@ -47,31 +59,46 @@ int exitAndTimer(char* argv1, char* argv2, char* argv3) {
 		snprintf(buf, sizeof(buf), "%ld.%03ld", seconds, millis);
 	}
 
-	out += RESET;
-	out += exit_bg;
-	out += FG_TIMER;
-	out += ICON_OPEN_BOX;
-	out += RESET;
-	out += BG_TIMER;
-	out += " 🕒 ";
-	out += buf;
-	out += " ";
-	out += RESET;
-	out += BG_TIMER;
-	out += FG_CMD;
-	out += ICON_OPEN_BOX;
+	out.append(RESET)
+		.append(exit_bg)
+		.append(FG_TIMER)
+		.append(ICON_OPEN_BOX)
+		.append(RESET)
+		.append(BG_TIMER)
+		.append(" 🕒 ")
+		.append(buf)
+		.append(" ")
+		.append(RESET)
+		.append(BG_TIMER)
+		.append(FG_CMD)
+		.append(ICON_OPEN_BOX);
+
+	return out;
+}
+
+int exitAndTimer(char* argv1, char* argv2, char* argv3) {
+	std::string out;
+	out.reserve(128 + strlen(argv3));
+
+	std::string exit_bg;
+	// EXIT CODE BLOCK
+	out.append(exit_block(argv1, exit_bg));
+	// END EXIT CODE BLOCK
+
+	// TIMER BLOCK
+	out.append(timer_block(argv2, exit_bg));
 	// END TIMER BLOCK
 
-	out += RESET;
-	out += BG_CMD;
-	out += " ";
-	out += argv3;
-	out += " ";
+	out.append(RESET)
+		.append(BG_CMD)
+		.append(" ")
+		.append(argv3)
+		.append(" ")
 
-	out += RESET;
-	out += "\n";
+		.append(RESET)
+		.append("\n");
 
-	std::cout << out;
+	write(1, out.data(), out.size());
 
 	return 0;
 }
